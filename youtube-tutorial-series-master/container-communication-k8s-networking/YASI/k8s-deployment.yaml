@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: k8s-depl
+ labels:
+  app: my-app
+spec:
+ replicas: 3
+ selector:
+  matchLabels:
+   app: my-app
+ template:
+  metadata:
+   labels:
+    app: my-app
+  spec:
+   containers:
+   - name: nginx-container
+     image: nginx
+     ports:
+     - containerPort: 80
+   - name: sidecar
+     image: curlimages/curl
+     command: ["/bin/sh"]
+     args: ["-c", "echo Hello from the sidecar container; sleep 300"]  
+ 
